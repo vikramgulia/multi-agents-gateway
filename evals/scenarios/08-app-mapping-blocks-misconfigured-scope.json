@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "08-app-mapping-blocks-misconfigured-scope",
+  "description": "Defence in depth: the front door wrongly grants the mutating tool, but the application never enabled it.",
+  "tags": [
+    "scope",
+    "safety",
+    "defence-in-depth"
+  ],
+  "input": {
+    "text": "Enable voicemail for 5551230001",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": [
+      "diagnose_voicemail",
+      "apply_voicemail_fix"
+    ]
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "apply_voicemail_fix",
+        "arguments": {
+          "user_id": "5551230001",
+          "action": "enable_voicemail"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "no_reachable_capability",
+    "never_invoked": [
+      "apply_voicemail_fix"
+    ]
+  }
+}

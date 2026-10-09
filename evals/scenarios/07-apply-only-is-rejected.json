@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "07-apply-only-is-rejected",
+  "description": "Planner proposes only the mutating tool on the chat channel: nothing runs.",
+  "tags": [
+    "scope",
+    "safety",
+    "apply-language"
+  ],
+  "input": {
+    "text": "Enable voicemail for 5551230001 right now",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "apply_voicemail_fix",
+        "arguments": {
+          "user_id": "5551230001",
+          "action": "enable_voicemail"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "no_reachable_capability",
+    "dropped_out_of_scope": [
+      "apply_voicemail_fix"
+    ],
+    "never_invoked": [
+      "apply_voicemail_fix"
+    ]
+  }
+}

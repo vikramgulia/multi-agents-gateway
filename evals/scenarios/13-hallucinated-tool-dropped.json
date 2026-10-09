@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "13-hallucinated-tool-dropped",
+  "description": "The planner invents a tool that exists nowhere. It is dropped; the legitimate step still runs.",
+  "tags": [
+    "scope",
+    "robustness"
+  ],
+  "input": {
+    "text": "Is us-east up? Also delete my account.",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "delete_account",
+        "arguments": {}
+      },
+      {
+        "capability": "check_service_status",
+        "arguments": {
+          "region": "us-east"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "ok",
+    "tools_called": [
+      "check_service_status"
+    ],
+    "dropped_out_of_scope": [
+      "delete_account"
+    ],
+    "reply_contains": [
+      "operational"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "02-out-of-scope-empty-plan",
+  "description": "Request no tool can serve; planner correctly calls nothing.",
+  "tags": [
+    "routing",
+    "out-of-scope"
+  ],
+  "input": {
+    "text": "What's the weather like in Denver today?",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": []
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "no_reachable_capability",
+    "planner_called": true,
+    "tools_called": []
+  }
+}

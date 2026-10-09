@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "id": "14-planner-outage-is-not-out-of-scope",
+  "description": "If the routing model is down the caller gets a distinct error code, not 'nothing matched'.",
+  "tags": [
+    "robustness"
+  ],
+  "input": {
+    "text": "Check my voicemail 5551230001",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "planner_error": true
+  },
+  "assert": {
+    "status": "error",
+    "error_code": "classifier_unavailable",
+    "planner_called": true,
+    "never_invoked": [
+      "diagnose_voicemail"
+    ]
+  }
+}

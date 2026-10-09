@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "04-missing-application-id",
+  "description": "No application id: reject before the planner or any agent runs.",
+  "tags": [
+    "scope",
+    "rejection"
+  ],
+  "input": {
+    "text": "Check my voicemail 5551230001",
+    "application_id": null,
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "application_required",
+    "planner_called": false,
+    "never_invoked": [
+      "diagnose_voicemail"
+    ]
+  }
+}

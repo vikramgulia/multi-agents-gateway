@@ -1,0 +1,62 @@
+name: nightly-live-eval
+
+# Needs a real model, so it does not gate PRs. Runs nightly and on demand.
+# Fails if routing accuracy drops below evals/baseline.json, or if the model
+# ever proposes a tool that was not offered to it.
+on:
+  schedule:
+    - cron: "17 5 * * *"
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Ollama model tag"
+        default: "llama3.2"
+      repeats:
+        description: "Runs per utterance"
+        default: "3"
+
+jobs:
+  live-eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: pip install -e .
+
+      - name: Install Ollama and pull the model
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          (ollama serve > ollama.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf localhost:11434/api/tags > /dev/null && break; sleep 2; done
+          ollama pull "${{ inputs.model || 'llama3.2' }}"
+
+      # Reports from earlier runs are restored first so the new report can diff
+      # against the previous one for the same model.
+      - name: Restore previous reports
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: live-eval-reports
+          path: reports
+
+      - name: Run live eval
+        run: python -m evals.live_eval --model "${{ inputs.model || 'llama3.2' }}" --repeats "${{ inputs.repeats || '3' }}" --keep 30
+
+      - name: Job summary
+        if: always()
+        run: cat reports/latest.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-eval-reports
+          path: reports/
+          retention-days: 90

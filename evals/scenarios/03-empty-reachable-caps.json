@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "03-empty-reachable-caps",
+  "description": "The front door grants nothing; the planner must not even be consulted.",
+  "tags": [
+    "scope",
+    "out-of-scope"
+  ],
+  "input": {
+    "text": "Check my voicemail 5551230001",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": []
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "no_reachable_capability",
+    "planner_called": false,
+    "never_invoked": [
+      "diagnose_voicemail"
+    ]
+  }
+}

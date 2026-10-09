@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "id": "21-catch-all-tool-absorbs-off-topic-then-escalates",
+  "description": "Found by the live eval: the model sends off-topic requests (weather, jokes) to the general question tool. That is in scope, so the filter cannot stop it; the safety net is that the agent has no answer and hands off to a human.",
+  "tags": [
+    "routing",
+    "escalation",
+    "found-by-live-eval"
+  ],
+  "input": {
+    "text": "Tell me a joke.",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "answer_question",
+        "arguments": {
+          "question": "Tell me a joke."
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "ok",
+    "escalate": true,
+    "tools_called": [
+      "answer_question"
+    ],
+    "reply_contains": [
+      "teammate will follow up"
+    ]
+  }
+}

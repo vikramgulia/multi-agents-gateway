@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "id": "11-agent-crash-safe-reply",
+  "description": "The agent throws. The customer gets a safe reply, not the stack text.",
+  "tags": [
+    "escalation",
+    "robustness"
+  ],
+  "input": {
+    "text": "Check my voicemail 5551230001",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      }
+    ],
+    "agents": {
+      "diagnose_voicemail": {
+        "raise": "connection reset by peer at 192.0.2.7"
+      }
+    }
+  },
+  "assert": {
+    "status": "ok",
+    "escalate": true,
+    "reply_contains": [
+      "teammate will follow up"
+    ],
+    "reply_not_contains": [
+      "192.0.2.7",
+      "connection reset"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "id": "16-no-cross-agent-data-flow",
+  "description": "Two agents run in one request. One holds a secret in its internal output. That secret must not appear in the other agent's request or in the reply: the router is the only hub, so there is no channel for the agents to coordinate over.",
+  "tags": [
+    "isolation",
+    "information-flow"
+  ],
+  "input": {
+    "text": "Voicemail 5551230001 broken, and is us-west up?",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      },
+      {
+        "capability": "check_service_status",
+        "arguments": {
+          "region": "us-west"
+        }
+      }
+    ],
+    "agents": {
+      "diagnose_voicemail": {
+        "confidence": 0.9,
+        "public": {
+          "summary": "Voicemail is switched off."
+        },
+        "internal": {
+          "scratch": "ZX-CANARY-7731"
+        }
+      },
+      "check_service_status": {
+        "confidence": 0.95,
+        "public": {
+          "summary": "us-west is operational."
+        },
+        "internal": {
+          "scratch": "ANOTHER-SECRET-0042"
+        }
+      }
+    }
+  },
+  "assert": {
+    "status": "ok",
+    "tools_called": [
+      "diagnose_voicemail",
+      "check_service_status"
+    ],
+    "reply_not_contains": [
+      "ZX-CANARY-7731",
+      "ANOTHER-SECRET-0042"
+    ]
+  },
+  "canaries": [
+    "ZX-CANARY-7731",
+    "ANOTHER-SECRET-0042"
+  ]
+}

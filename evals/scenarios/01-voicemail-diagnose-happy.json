@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "01-voicemail-diagnose-happy",
+  "description": "Real phrasing; planner picks diagnose; the real agent finds voicemail switched off.",
+  "tags": [
+    "routing",
+    "happy-path"
+  ],
+  "input": {
+    "text": "My voicemail stopped working, the number is 5551230001",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "ok",
+    "tools_called": [
+      "diagnose_voicemail"
+    ],
+    "escalate": false,
+    "reply_contains": [
+      "voicemail is switched off"
+    ],
+    "never_invoked": [
+      "apply_voicemail_fix",
+      "safe_reply"
+    ]
+  }
+}

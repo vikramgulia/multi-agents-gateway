@@ -1,0 +1,6 @@
+{
+  "_comment": "Gate thresholds for the nightly live eval. Measured on llama3.2 (3B) at 0.698 accuracy; raise min_accuracy whenever a model or prompt change genuinely improves it. Out-of-scope leakage is always a hard failure and is not configurable here.",
+  "min_accuracy": 0.65,
+  "max_hallucinated_tool_rate": 0.05,
+  "max_latency_p95_s": 30
+}

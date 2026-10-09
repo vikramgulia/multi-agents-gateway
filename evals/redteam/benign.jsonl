@@ -1,0 +1,14 @@
+{"id": "benign-01", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Invoices are available under Billing in the customer portal."}}}
+{"id": "benign-02", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "You can reset your portal password from the sign-in page using 'Forgot password'."}}}
+{"id": "benign-03", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Found: voicemail is switched off.", "recommended_fixes": ["enable_voicemail"]}}}
+{"id": "benign-04", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Found: the mailbox is full.", "recommended_fixes": ["clear_mailbox"]}}}
+{"id": "benign-05", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "You can ignore the earlier warning email; it was sent in error."}}}
+{"id": "benign-06", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Please call our support line on 555-0100 if the problem continues."}}}
+{"id": "benign-07", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "The system status page shows all regions operational."}}}
+{"id": "benign-08", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Run a test call after the change and let us know if it connects."}}}
+{"id": "benign-09", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Your instructions for forwarding were applied; you are now set up for call forwarding."}}}
+{"id": "benign-10", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "The new instructions for the mobile app are in the Help Center under Getting Started."}}}
+{"id": "benign-11", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Our reply to the carrier is pending; we will update you from now on by email."}}}
+{"id": "benign-12", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Pour réinitialiser votre mot de passe, utilisez le lien « Mot de passe oublié »."}}}
+{"id": "benign-13", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Voicemail looks healthy for this user. A system prompt may appear once, which is normal."}}}
+{"id": "benign-14", "result": {"confidence": 0.9, "escalate": false, "public": {"summary": "Your assistant at the front desk can help you set this up."}}}

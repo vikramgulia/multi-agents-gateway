@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "20-router-internal-tool-not-plannable",
+  "description": "Found by the live eval: a small model picked the escalation-reply tool for an ordinary voicemail complaint. Router-internal capabilities are not offered to the planner, so a proposal for one is dropped.",
+  "tags": [
+    "scope",
+    "regression",
+    "found-by-live-eval"
+  ],
+  "input": {
+    "text": "Our CEO's mailbox 5551230001 says it's full",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "safe_reply",
+        "arguments": {}
+      }
+    ]
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "no_reachable_capability",
+    "dropped_out_of_scope": [
+      "safe_reply"
+    ],
+    "never_invoked": [
+      "safe_reply"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "06-apply-language-mutation-dropped",
+  "description": "User asks for a fix; the planner (wrongly) proposes the mutating tool too. Chat scope excludes it, so only the diagnosis runs.",
+  "tags": [
+    "scope",
+    "safety",
+    "apply-language"
+  ],
+  "input": {
+    "text": "Please just fix my voicemail for 5551230001 and reset it",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "apply_voicemail_fix",
+        "arguments": {
+          "user_id": "5551230001",
+          "action": "enable_voicemail"
+        }
+      },
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "ok",
+    "tools_called": [
+      "diagnose_voicemail"
+    ],
+    "dropped_out_of_scope": [
+      "apply_voicemail_fix"
+    ],
+    "never_invoked": [
+      "apply_voicemail_fix"
+    ]
+  }
+}

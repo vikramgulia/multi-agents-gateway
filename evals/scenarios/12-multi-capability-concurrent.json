@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "id": "12-multi-capability-concurrent",
+  "description": "Diagnostics plus service status in one message; both agents run at the same time.",
+  "tags": [
+    "routing",
+    "multi-capability",
+    "concurrency"
+  ],
+  "input": {
+    "text": "Voicemail broken for 5551230001, and is the eu-central service down?",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      },
+      {
+        "capability": "check_service_status",
+        "arguments": {
+          "region": "eu-central"
+        }
+      }
+    ],
+    "agents": {
+      "diagnose_voicemail": {
+        "confidence": 0.9,
+        "delay_ms": 120,
+        "public": {
+          "summary": "Voicemail is switched off."
+        }
+      },
+      "check_service_status": {
+        "confidence": 0.95,
+        "delay_ms": 120,
+        "public": {
+          "summary": "eu-central is degraded."
+        }
+      }
+    }
+  },
+  "assert": {
+    "status": "ok",
+    "tools_called": [
+      "diagnose_voicemail",
+      "check_service_status"
+    ],
+    "concurrent": true,
+    "escalate": false,
+    "reply_contains": [
+      "switched off",
+      "degraded"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "10-low-confidence-escalates",
+  "description": "No phone number in the message: the diagnosis agent is unsure, so the conversation is escalated with a safe reply.",
+  "tags": [
+    "escalation"
+  ],
+  "input": {
+    "text": "My voicemail is broken",
+    "application_id": "help-chat",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {}
+      }
+    ]
+  },
+  "assert": {
+    "status": "ok",
+    "escalate": true,
+    "max_confidence": 0.0,
+    "reply_contains": [
+      "teammate will follow up"
+    ],
+    "reply_not_contains": [
+      "10-digit"
+    ]
+  }
+}

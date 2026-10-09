@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "09-admin-channel-may-apply",
+  "description": "Positive control: on the ops console the same tool is allowed. Without this the 'blocked' scenarios could be passing for the wrong reason.",
+  "tags": [
+    "scope",
+    "positive-control"
+  ],
+  "input": {
+    "text": "Enable voicemail for 5551230001",
+    "application_id": "ops-console",
+    "channel": "admin",
+    "reachable_caps": "channel:admin"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "apply_voicemail_fix",
+        "arguments": {
+          "user_id": "5551230001",
+          "action": "enable_voicemail"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "ok",
+    "tools_called": [
+      "apply_voicemail_fix"
+    ],
+    "reply_contains": [
+      "Applied enable_voicemail"
+    ]
+  }
+}

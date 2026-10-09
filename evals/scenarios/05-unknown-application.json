@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "id": "05-unknown-application",
+  "description": "An application that is not registered has no capabilities.",
+  "tags": [
+    "scope",
+    "rejection"
+  ],
+  "input": {
+    "text": "Check my voicemail 5551230001",
+    "application_id": "does-not-exist",
+    "channel": "chat",
+    "reachable_caps": "channel:chat"
+  },
+  "stub": {
+    "plan": [
+      {
+        "capability": "diagnose_voicemail",
+        "arguments": {
+          "user_id": "5551230001"
+        }
+      }
+    ]
+  },
+  "assert": {
+    "status": "rejected",
+    "error_code": "no_reachable_capability",
+    "planner_called": false,
+    "never_invoked": [
+      "diagnose_voicemail"
+    ]
+  }
+}
